@@ -6,6 +6,7 @@ stages:
     - scan
 
 maven:
+    image: maven:3.6.0-jdk-8
     stage: build
     script:
         - yum -y install maven
@@ -15,6 +16,7 @@ maven:
             - target/verademo.war
 
 development-upload-for-sast:
+    image: openjdk:11-jre
     stage: scan
     only:
         - development
@@ -25,6 +27,7 @@ development-upload-for-sast:
     allow_failure: true
     
 release-upload-for-sast:
+    image: openjdk:11-jre
     stage: scan
     only:
         - release
@@ -35,6 +38,7 @@ release-upload-for-sast:
     allow_failure: true
     
 policy-upload-for-sast:
+    image: openjdk:11-jre
     stage: scan
     only:
         - schedules
