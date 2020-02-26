@@ -29,7 +29,7 @@ development-upload-for-sast:
         - java -jar pipeline-scan.jar -i ${VERACODE_API_ID} -k ${VERACODE_API_KEY} -j target/verademo.war
     artifacts:
         paths:
-        - results.json
+            - results.json
     allow_failure: true
     
 release-upload-for-sast:
