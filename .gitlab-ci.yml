@@ -4,6 +4,7 @@ stages:
     - scan
     
 Software Composition Analysis:
+    image: maven:3.6.0-jdk-8
     stage: SCA
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash
