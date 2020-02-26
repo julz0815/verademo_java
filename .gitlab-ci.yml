@@ -1,6 +1,3 @@
----
-image: docker-ro.laputa.veracode.io/agora/buildbox:centos7-m1-java8-latest
-
 stages:
     - build
     - scan
