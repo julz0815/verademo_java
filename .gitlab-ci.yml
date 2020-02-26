@@ -1,7 +1,13 @@
 stages:
-    - build
     - SCA
+    - build
     - scan
+    
+Software Composition Analysis:
+    stage: SCA
+    script:
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash
+
 
 compile-application:
     image: maven:3.6.0-jdk-8
@@ -17,11 +23,6 @@ compile-application:
       paths:
         - target/
         - .m2/repository
-
-Software Composition Analysis:
-    stage: SCA
-    script:
-        - curl -sSL https://download.sourceclear.com/ci.sh | bash
 
 development-upload-for-sast:
     image: openjdk:11-jre
