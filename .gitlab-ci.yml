@@ -1,46 +1,68 @@
----
-image: docker-ro.laputa.veracode.io/agora/buildbox:centos7-m1-java8-latest
-
 stages:
+    - SCA
     - build
     - scan
+    
+Software Composition Analysis:
+    image: maven:3.6.0-jdk-8
+    stage: SCA
+    script:
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash
 
-maven:
+
+compile-application:
+    image: maven:3.6.0-jdk-8
     stage: build
     script:
-        - yum -y install maven
-        - mvn compile package
+      - mvn clean package
     artifacts:
-        paths:
-            - target/verademo.war
+      name: verademo_julian_10_build
+      paths:
+        - target/
+      expire_in: 5 week
+    cache:
+      paths:
+        - target/
+        - .m2/repository
 
 development-upload-for-sast:
+    image: openjdk:11-jre
     stage: scan
     only:
         - development
+    before_script:
+        - curl -sSO https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+        - unzip pipeline-scan-LATEST.zip
     script:
-        - java -jar $HOME/helpers/VeracodeJavaAPI.jar -vid ${TEAM_ANALYSISCENTER_ID} -vkey ${TEAM_ANALYSISCENTER_KEY}
-          -action UploadAndScan -appname "Verademo" -createprofile false -autoscan true -sandboxname "gitlab-development"
-          -filepath ./target/verademo.war -version "Job ${CI_JOB_ID} in pipeline ${CI_PIPELINE_ID}"
+        - java -jar pipeline-scan.jar -vid ${VERACODE_API_ID} -vkey ${VERACODE_API_KEY} --file target/verademo.war
+    artifacts:
+        paths:
+            - results.json
     allow_failure: true
     
 release-upload-for-sast:
+    image: openjdk:11-jre
     stage: scan
     only:
         - release
+    before_script:
+        - wget -q -O VeracodeJavaAPI.jar https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar
     script:
-        - java -jar $HOME/helpers/VeracodeJavaAPI.jar -vid ${TEAM_ANALYSISCENTER_ID} -vkey ${TEAM_ANALYSISCENTER_KEY}
-          -action UploadAndScan -appname "Verademo" -createprofile false -autoscan true -sandboxname "gitlab-release"
+        - java -jar VeracodeJavaAPI.jar -vid ${TEAM_ANALYSISCENTER_ID} -vkey ${TEAM_ANALYSISCENTER_KEY}
+          -action UploadAndScan -appname "Verademo" -createprofile true -autoscan true -sandboxname "gitlab-release"
           -filepath ./target/verademo.war -version "Job ${CI_JOB_ID} in pipeline ${CI_PIPELINE_ID}"
     allow_failure: true
     
 policy-upload-for-sast:
+    image: openjdk:11-jre
     stage: scan
     only:
         - schedules
         - master
+    before_script:
+            - wget -q -O VeracodeJavaAPI.jar https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar
     script:
-        - java -jar $HOME/helpers/VeracodeJavaAPI.jar -vid ${TEAM_ANALYSISCENTER_ID} -vkey ${TEAM_ANALYSISCENTER_KEY}
-          -action UploadAndScan -appname "Verademo" -createprofile false -autoscan true
+        - java -jar VeracodeJavaAPI.jar -vid ${TEAM_ANALYSISCENTER_ID} -vkey ${TEAM_ANALYSISCENTER_KEY}
+          -action UploadAndScan -appname "Verademo" -createprofile true -autoscan true
           -filepath ./target/verademo.war -version "Job ${CI_JOB_ID} in pipeline ${CI_PIPELINE_ID}"
           -scantimeout 15
