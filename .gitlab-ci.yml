@@ -12,7 +12,7 @@ Software Composition Analysis:
         paths:
             - results.json
         when: always
-        name: "veracode-sast-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+        name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
 
 compile-application:
     image: maven:3.6.0-jdk-8
@@ -43,6 +43,7 @@ development-upload-for-sast:
         paths:
             - results.json
         when: always
+        name: "veracode-pipeline-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
     allow_failure: true
     
 release-upload-for-sast:
