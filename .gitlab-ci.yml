@@ -42,6 +42,7 @@ development-upload-for-sast:
     artifacts:
         paths:
             - results.json
+        when: always
     allow_failure: true
     
 release-upload-for-sast:
