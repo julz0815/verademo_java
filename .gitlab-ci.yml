@@ -8,6 +8,11 @@ Software Composition Analysis:
     stage: SCA
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash
+    artifacts:
+        paths:
+            - results.json
+        when: always
+        name: "veracode-sast-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
 
 compile-application:
     image: maven:3.6.0-jdk-8
