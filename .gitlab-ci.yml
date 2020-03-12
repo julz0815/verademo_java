@@ -7,7 +7,7 @@ Software Composition Analysis:
     image: maven:3.6.0-jdk-8
     stage: SCA
     script:
-        - sh "curl -sSL https://download.sourceclear.com/ci.sh | DEBUG=1 sh -s -- scan --no-upload"
+        - curl -sSL https://download.sourceclear.com/ci.sh | DEBUG=1 sh -s -- scan --no-upload
     artifacts:
         paths:
             - results.json
