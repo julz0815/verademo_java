@@ -43,7 +43,7 @@ Software Composition Analysis App 3rd party:
     allow_failure: false
 
 Software Composition Analysis Docker 3rd party:
-    image: docker:19.03.8-dind 
+    image: dockercore/docker
     stage: Security_Scan
     services:
         - docker:19.03.8-dind
