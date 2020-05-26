@@ -43,7 +43,7 @@ Software Composition Analysis App 3rd party:
     allow_failure: false
 
 Software Composition Analysis Docker 3rd party:
-    image: maven:3.6.0-jdk-8
+    image: docker:19.03.8-dind 
     stage: Security_Scan
     before_script: 
         - docker login --username juliantotzek --password Sn0wball!
