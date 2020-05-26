@@ -2,7 +2,7 @@ stages:
     - Build
     - Security_Scan
     - Deploy_Run
-    - Security_Scan_Dynamic_Analysis
+    - Dynamic_Analysis_Security_Scan
 
 
 Compile Application:
@@ -127,7 +127,7 @@ Docker Start in Production:
 
 Dynamic Analysis in Staging:
     image: openjdk:11-jre
-    stage: Security_Scan_Dynamic_Analysis
+    stage: Dynamic_Analysis_Security_Scan
     only:
         - development
         - release
@@ -136,7 +136,7 @@ Dynamic Analysis in Staging:
 
 Dynamic Analysis in Staging:
     image: openjdk:11-jre
-    stage: Security_Scan_Dynamic_Analysis
+    stage: Dynamic_Analysis_Security_Scan
     only:
         - master
     script:
