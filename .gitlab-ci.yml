@@ -41,16 +41,16 @@ Software Composition Analysis App 3rd party:
         when: always
         name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
 
-Software Composition Analysis App 3rd party:
+Software Composition Analysis App 3rd docker:
     image: maven:3.6.0-jdk-8
     stage: security_scan
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash --image verademo
     artifacts:
-    paths:
-        - results.json
-    when: always
-    name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+        paths:
+            - results.json
+        when: always
+        name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
 
 development-upload-for-sast:
     image: openjdk:11-jre
