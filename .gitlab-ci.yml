@@ -115,7 +115,7 @@ Run-docker-container-staging:
     stage: Deploy_Run
     only:
         - master
-     services:
+    services:
         - docker:19.03.8-dind
     before_script:
         - docker info
