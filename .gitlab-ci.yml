@@ -1,8 +1,8 @@
 stages:
     - Build
     - Security_Scan
-    - Dynamic_Analysis
     - Deploy_Run
+    - Dynamic_Analysis
 
 Compile Application:
     image: maven:3.6.0-jdk-8
@@ -125,7 +125,6 @@ Docker Start in Production:
         - docker run verademo
 
 Dynamic Analysis in Staging:
-    image: openjdk:11-jre
     stage: Dynamic_Analysis
     only:
         - development
@@ -134,7 +133,6 @@ Dynamic Analysis in Staging:
         - http --auth-type veracode_hmac PUT https://api.veracode.com//was/configservice/v1/scan_occurrences/358303b78b3670b42083a410c770323d?action=RESUBMIT
 
 Dynamic Analysis in Staging:
-    image: openjdk:11-jre
     stage: Dynamic_Analysis
     only:
         - master
