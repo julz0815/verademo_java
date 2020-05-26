@@ -26,7 +26,7 @@ build-docker-image:
     before_script:
         - docker info
     script:
-        - docker build -t /builds/julz0815/verademo/docker/ .
+        - docker build -t verademo .
 
 
 
