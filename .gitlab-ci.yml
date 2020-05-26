@@ -1,9 +1,8 @@
 stages:
     - Build
     - Security_Scan
-    - Deploy_Run
     - Dynamic_Analysis
-    - Finalise_Deployment
+    - Deploy_Run
 
 Compile Application:
     image: maven:3.6.0-jdk-8
