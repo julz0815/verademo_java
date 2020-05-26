@@ -29,6 +29,15 @@ compile-application:
         - target/
         - .m2/repository
 
+build-docker-image:
+    stage: build
+    bevor_script:
+        - docker info
+    build_image:
+        script:
+            - docker build -t docker/tomcat-dokerfile .
+
+
 development-upload-for-sast:
     image: openjdk:11-jre
     stage: scan
