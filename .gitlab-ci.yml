@@ -45,8 +45,8 @@ Software Composition Analysis App 3rd party:
 Software Composition Analysis Docker 3rd party:
     image: docker:19.03.8-dind 
     stage: Security_Scan
-    before_script: 
-        - docker login --username juliantotzek --password Sn0wball!
+    services:
+        - docker:19.03.8-dind
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan --container verademo
     artifacts:
