@@ -30,8 +30,9 @@ compile-application:
         - .m2/repository
 
 build-docker-image:
+    image: docker:19.03.8
     stage: build
-    bevor_script:
+    before_script:
         - docker info
     build_image:
         script:
