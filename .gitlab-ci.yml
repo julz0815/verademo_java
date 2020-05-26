@@ -2,7 +2,7 @@ stages:
     - Build
     - Security_Scan
     - Deploy_Run
-    - Dynamic_Analysis_Security_Scan
+    - Dynamic_Analysis
 
 
 Compile Application:
@@ -111,7 +111,7 @@ Docker Start in Staging:
     before_script:
             - docker info
     script:
-        - docker run verademo .
+        - docker run verademo
 
 Docker Start in Production:
     image: docker:19.03.8-dind 
@@ -123,11 +123,11 @@ Docker Start in Production:
     before_script:
         - docker info
     script:
-        - docker run verademo .
+        - docker run verademo
 
 Dynamic Analysis in Staging:
     image: openjdk:11-jre
-    stage: Dynamic_Analysis_Security_Scan
+    stage: Dynamic_Analysis
     only:
         - development
         - release
@@ -136,7 +136,7 @@ Dynamic Analysis in Staging:
 
 Dynamic Analysis in Staging:
     image: openjdk:11-jre
-    stage: Dynamic_Analysis_Security_Scan
+    stage: Dynamic_Analysis
     only:
         - master
     script:
