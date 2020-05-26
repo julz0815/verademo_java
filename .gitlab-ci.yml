@@ -2,6 +2,7 @@ stages:
     - Build
     - Security_Scan
     - Deploy_Run
+    - Security_Scan_Dynamic_Analysis
 
 
 Compile Application:
@@ -123,3 +124,20 @@ Docker Start in Production:
         - docker info
     script:
         - docker run verademo .
+
+Dynamic Analysis in Staging:
+    image: openjdk:11-jre
+    stage: Security_Scan_Dynamic_Analysis
+    only:
+        - development
+        - release
+    script:
+        - http --auth-type veracode_hmac PUT https://api.veracode.com//was/configservice/v1/scan_occurrences/358303b78b3670b42083a410c770323d?action=RESUBMIT
+
+Dynamic Analysis in Staging:
+    image: openjdk:11-jre
+    stage: Security_Scan_Dynamic_Analysis
+    only:
+        - master
+    script:
+        - http --auth-type veracode_hmac PUT https://api.veracode.com//was/configservice/v1/scan_occurrences/358303b78b3670b42083a410c770323d?action=RESUBMIT
