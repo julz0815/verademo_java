@@ -1,18 +1,7 @@
 stages:
-    - SCA
     - build
-    - scan
+    - security_scan
 
-Software Composition Analysis:
-    image: maven:3.6.0-jdk-8
-    stage: SCA
-    script:
-        - curl -sSL https://download.sourceclear.com/ci.sh | bash
-    artifacts:
-        paths:
-            - results.json
-        when: always
-        name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
 
 compile-application:
     image: maven:3.6.0-jdk-8
@@ -30,17 +19,31 @@ compile-application:
         - .m2/repository
 
 build-docker-image:
-    image: docker:19.03.8
+    image: docker:19.03.8-dind 
     stage: build
+    services:
+        - docker:19.03.8-dind
     before_script:
         - docker info
     script:
         - docker build -t docker/tomcat-dokerfile .
 
 
+
+Software Composition Analysis:
+    image: maven:3.6.0-jdk-8
+    stage: security_scan
+    script:
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash
+    artifacts:
+        paths:
+            - results.json
+        when: always
+        name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+
 development-upload-for-sast:
     image: openjdk:11-jre
-    stage: scan
+    stage: security_scan
     only:
         - development
     before_script:
@@ -57,7 +60,7 @@ development-upload-for-sast:
     
 release-upload-for-sast:
     image: openjdk:11-jre
-    stage: scan
+    stage: security_scan
     only:
         - release
     before_script:
@@ -70,7 +73,7 @@ release-upload-for-sast:
     
 policy-upload-for-sast:
     image: openjdk:11-jre
-    stage: scan
+    stage: security_scan
     only:
         - schedules
         - master
