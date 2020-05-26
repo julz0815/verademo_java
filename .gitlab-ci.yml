@@ -48,7 +48,7 @@ Software Composition Analysis Docker 3rd party:
     services:
         - dockercore/docker
     script:
-        - curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan --image verademo
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan --image juliantotzek/verademo1-tomcat
     artifacts:
         paths:
             - results.json
