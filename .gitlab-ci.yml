@@ -4,7 +4,7 @@ stages:
     - Deploy_Run
 
 
-compile-application:
+Compile Application:
     image: maven:3.6.0-jdk-8
     stage: Build
     script:
@@ -19,7 +19,7 @@ compile-application:
         - target/
         - .m2/repository
 
-build-docker-image:
+Build Docker Image:
     image: docker:19.03.8-dind 
     stage: Build
     services:
@@ -41,6 +41,7 @@ Software Composition Analysis App 3rd party:
             - results.json
         when: always
         name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    allow_failure: false
 
 Software Composition Analysis Docker 3rd party:
     image: maven:3.6.0-jdk-8
@@ -52,8 +53,9 @@ Software Composition Analysis Docker 3rd party:
             - results.json
         when: always
         name: "veracode-SCA-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    allow_failure: false
 
-development-upload-for-sast:
+Pipeline Scan Staic Analysis:
     image: openjdk:11-jre
     stage: Security_Scan
     only:
@@ -68,9 +70,9 @@ development-upload-for-sast:
             - results.json
         when: always
         name: "veracode-pipeline-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
-    allow_failure: true
+    allow_failure: false
     
-release-upload-for-sast:
+Sandbox Scan Static Analysis:
     image: openjdk:11-jre
     stage: Security_Scan
     only:
@@ -83,7 +85,7 @@ release-upload-for-sast:
           -filepath ./target/verademo.war -version "Job ${CI_JOB_ID} in pipeline ${CI_PIPELINE_ID}"
     allow_failure: true
     
-policy-upload-for-sast:
+Policy Scan Static Analysis:
     image: openjdk:11-jre
     stage: Security_Scan
     only:
@@ -97,7 +99,7 @@ policy-upload-for-sast:
           -filepath ./target/verademo.war -version "Job ${CI_JOB_ID} in pipeline ${CI_PIPELINE_ID}"
           -scantimeout 15
 
-Run-docker-container-staging:
+Docker Start in Staging:
     image: docker:19.03.8-dind 
     stage: Deploy_Run
     only:
@@ -110,7 +112,7 @@ Run-docker-container-staging:
     script:
         - docker run verademo .
 
-Run-docker-container-staging:
+Docker Start in Production:
     image: docker:19.03.8-dind 
     stage: Deploy_Run
     only:
