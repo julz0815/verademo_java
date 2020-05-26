@@ -46,7 +46,7 @@ Software Composition Analysis Docker 3rd party:
     image: dockercore/docker
     stage: Security_Scan
     services:
-        - docker:19.03.8-dind
+        - dockercore/docker
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan --image verademo
     artifacts:
