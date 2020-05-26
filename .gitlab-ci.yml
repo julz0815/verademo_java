@@ -43,7 +43,7 @@ Software Composition Analysis App 3rd party:
     allow_failure: false
 
 Software Composition Analysis Docker 3rd party:
-    image: dockercore/docker
+    image: docker
     stage: Security_Scan
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan --image juliantotzek/verademo1-tomcat
