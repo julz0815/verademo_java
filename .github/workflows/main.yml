@@ -5,20 +5,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: julz0815/verademo_java/checkout@master
+      - uses: actions/checkout@master
       - name: Set up JDK 1.8
-        uses: julz0815/verademo_java@master
+        uses: actions/setup-java@v1
         with:
           java-version: 1.8
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -f github-actions-java-maven/pom.xml clean package
      
   pipeline-scan:
     runs-on: ubuntu-latest
     
     steps:
+      - uses: actions/checkout@master
       - name: Set up JDK 1.8 
-        uses: julz0815/verademo_java/chekout@master       
+        uses: actions/setup-java@v1       
         with:
           java-version: 1.8
       - name: Download the Pipeline Scanner
