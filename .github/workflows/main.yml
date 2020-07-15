@@ -1,11 +1,6 @@
 on: pull_request
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: build
-        run: mvn clean package
   pipeline-scan:
     runs-on: ubuntu-latest
     steps:
