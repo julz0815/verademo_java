@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build
-        run: maven clean package
+        run: mvn clean package
   pipeline-scan:
     runs-on: ubuntu-latest
     steps:
