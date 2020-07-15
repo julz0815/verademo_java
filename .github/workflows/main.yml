@@ -7,6 +7,10 @@ jobs:
     
     steps:
       - uses: actions/checkout@master
+      - shell: bash
+        env: 
+          vid: ${{ secrets.VERACODE_API_ID }}
+          vkey: ${{ secrets.VERACODE_API_KEY }}
       - name: Set up JDK 1.8 
         uses: actions/setup-java@v1       
         with:
@@ -24,6 +28,6 @@ jobs:
       - name: show other content
         run: ls -laR ../
       - name: Run Pipeline Scanner
-        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --file "target/verademo.war" --fail_on_severity="Very High, High"
+        run: java -Dpipeline.debug=true -jar pipeline-scan.jar -vid "$vid" -vkey "$vkey" --file "target/verademo.war" --fail_on_severity="Very High, High"
       - name: echo Var
         run: echo $PIPELINE_OUTPUT
