@@ -22,8 +22,8 @@ jobs:
       - name: Run Pipeline Scanner
         run: java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High" -jf results.json
       - name: rewrite json output into SARIF format
-        run: jsno.sh
+        run: json.sh
       - name: upload SARIF file
-         uses: github/codeql-action/upload-sarif@v1
-         with:
-           sarif_file: veracode-sarif.json
+      - uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: veracode-sarif.json
