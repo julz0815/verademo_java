@@ -20,6 +20,6 @@ jobs:
       - name: show environment
         run: env
       - name: Run Pipeline Scanner
-        run: java -Dpipeline.debug=true -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High"
+        run: java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High"
       - name: echo Var
         run: echo $PIPELINE_OUTPUT
