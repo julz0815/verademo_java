@@ -18,16 +18,19 @@ jobs:
       - name: Unzip the Pipeline Scanner
         run: unzip pipeline-scan-LATEST.zip
       - name: Run Pipeline Scanner
-        run: java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High" -jf results.json 
+        run: java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High" -jf .github/files/results.json 
       - name: set execution
         if: ${{ always() }}
         run: chmod +x .github/files/json.sh .github/files/jq-linux64
+      - name: chagne folder
+        run: cd .github/files
       - name: re-format json
         if: ${{ always() }}
         run: .github/files/json.sh
       - name: show folder content
+        if: ${{ always() }}
         run: ls -la
       - uses: github/codeql-action/upload-sarif@v1
         if: ${{ always() }}
         with:
-          sarif_file: veracode-sarif.json
+          sarif_file: .github/files/veracode-sarif.json
