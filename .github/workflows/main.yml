@@ -25,6 +25,8 @@ jobs:
       - name: re-format json
         if: ${{ always() }}
         run: .github/files/json.sh
+      - name: show folder content
+        run: ls -la
       - uses: github/codeql-action/upload-sarif@v1
         if: ${{ always() }}
         with:
