@@ -19,6 +19,8 @@ jobs:
         run: unzip pipeline-scan-LATEST.zip
       - name: Run Pipeline Scanner
         run: java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High" -jf results.json 
+      - name: set execution
+        run: chmod +x .github/files/json.sh
       - name: re-format json
         if: ${{ always() }}
         run: .github/files/json.sh
