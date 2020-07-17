@@ -32,12 +32,6 @@ jobs:
       - name: copy new json file
         if: ${{ always() }}
         run: cp veracode-sarif.json .github/files/
-      - name: which folder 
-        if: ${{ always() }}
-        run: pwd
-      - name: show folder content
-        if: ${{ always() }}
-        run: ls -laR
       - uses: github/codeql-action/upload-sarif@v1
         if: ${{ always() }}
         with:
