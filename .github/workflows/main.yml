@@ -19,13 +19,22 @@ jobs:
         run: unzip pipeline-scan-LATEST.zip
       - name: Run Pipeline Scanner and reformat json
         continue-on-error: true
-        run: | 
-          chmod +x .github/files/json.sh .github/files/jq-linux64
-          java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High" -jf results.json
-          cd .github/files
-          ls -laR
-          .github/files/json.sh
-          ls -laR
+        run: java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_API_ID }}" -vkey "${{ secrets.VERACODE_API_KEY }}" --file "target/verademo.war" --fail_on_severity="Very High, High" -jf results.json
+      - name: set execution
+        if: ${{ always() }}
+        run: chmod +x .github/files/json.sh .github/files/jq-linux64
+      - name: copy resulst file
+        if: ${{ always() }}
+        run: cp /home/runner/work/verademo_java/verademo_java/results.json .github/files/
+      - name: reformat json
+        if: ${{ always() }}
+        run: .github/files/json.sh
+      - name: which folder 
+        if: ${{ always() }}
+        run: pwd
+      - name: show folder content
+        if: ${{ always() }}
+        run: ls -laR
       - uses: github/codeql-action/upload-sarif@v1
         if: ${{ always() }}
         with:
