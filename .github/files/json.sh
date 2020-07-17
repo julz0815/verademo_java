@@ -25,7 +25,7 @@ while [ $i != $lines ] ;
 do
     #echo $i;
     # strting the results array
-    echo '{' >> veracode-sarif.json;
+    echo '      {' >> veracode-sarif.json;
     # strting the results array
 
     # starting the message tag
@@ -54,20 +54,24 @@ do
                 "physicalLocation" : {
                 "artifactLocation" : {
                     "uri" : "File: '$file' - Line: '$line' - Function: '$function'"
-                }
-            },
+                },
     ' >> veracode-sarif.json
 
     echo '
         "region" : {
-                "startLine" : '$line',
+                "startLine" : '$line'
             }
+        }
     ' >> veracode-sarif.json
 
     echo '
-        ],' >> veracode-sarif.json;
+        }],
+        "partialFingerprints" : {
+            "primaryLocationLineHash" : "NULL"
+        }
+        }]' >> veracode-sarif.json;
 
-    #starting locations tag
+    #ending locations tag
 
 
 
