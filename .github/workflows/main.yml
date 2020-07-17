@@ -23,6 +23,7 @@ jobs:
         if: ${{ always() }}
         run: chmod +x .github/files/json.sh .github/files/jq-linux64
       - name: chagne folder
+        if: ${{ always() }}
         run: cd .github/files
       - name: re-format json
         if: ${{ always() }}
