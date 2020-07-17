@@ -29,6 +29,9 @@ jobs:
       - name: reformat json
         if: ${{ always() }}
         run: .github/files/json.sh
+      - name: copy new json file
+        if: ${{ always() }}
+        run: cp veracode-sarif.json .github/files/
       - name: which folder 
         if: ${{ always() }}
         run: pwd
