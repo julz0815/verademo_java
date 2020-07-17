@@ -65,7 +65,7 @@ do
     ' >> veracode-sarif.json
 
     echo '
-        ]' >> veracode-sarif.json;
+        ],' >> veracode-sarif.json;
 
     #starting locations tag
 
