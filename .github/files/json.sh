@@ -83,7 +83,7 @@ do
     if [ $i != $lines ];
     then
     echo '
-    {' >> veracode-sarif.json;
+    ,{' >> veracode-sarif.json;
     fi
     #ending the results array
 
