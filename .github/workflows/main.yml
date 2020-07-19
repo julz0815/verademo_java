@@ -34,7 +34,7 @@ jobs:
         run: cp veracode-sarif.json .github/files/       
       - name: show json file
         if: ${{ always() }}
-        run: cat veracode-results.sarif
+        run: cat .github/files/veracode-sarif.json
       - uses: github/codeql-action/upload-sarif@v1
         if: ${{ always() }}
         with:
