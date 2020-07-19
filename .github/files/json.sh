@@ -56,8 +56,8 @@ do
     echo '
                     "region" : {
                             "startLine" : '$line',
-                            "startColumn" : 0,
-                            "endColumn" : 0
+                            "startColumn" : 1,
+                            "endColumn" : 2
                         }
                 }
             }],
