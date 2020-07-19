@@ -33,9 +33,9 @@ jobs:
           pipeline-results-json: .github/files/results.json
       - name: show json file
         if: ${{ always() }}
-        run: cat .github/files/veracode-sarif.json
+        run: cat veracode-results.sarif
       - uses: github/codeql-action/upload-sarif@v1
         if: ${{ always() }}
         with:
           token: ${{ github.token }}
-          sarif_file: .github/files/veracode-sarif.json
+          sarif_file: veracode-results.sarif
