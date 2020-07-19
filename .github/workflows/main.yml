@@ -26,11 +26,12 @@ jobs:
       - name: copy resulst file
         if: ${{ always() }}
         run: cp /home/runner/work/verademo_java/verademo_java/results.json .github/files/
-      - name: Convert pipeline scan output to SARIF format 
-        id: convert
-        uses: Lerer/veracode-pipeline-scan-results-to-sarif@v1.0
-        with:
-          pipeline-results-json: .github/files/results.json
+      - name: reformat json
+        if: ${{ always() }}
+        run: .github/files/json.sh
+      - name: copy new json file
+        if: ${{ always() }}
+        run: cp veracode-sarif.json .github/files/       
       - name: show json file
         if: ${{ always() }}
         run: cat veracode-results.sarif
@@ -38,4 +39,4 @@ jobs:
         if: ${{ always() }}
         with:
           token: ${{ github.token }}
-          sarif_file: veracode-results.sarif
+          sarif_file: .github/files/veracode-sarif.json
