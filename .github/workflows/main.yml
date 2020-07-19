@@ -31,7 +31,7 @@ jobs:
         run: .github/files/json.sh
       - name: copy new json file
         if: ${{ always() }}
-        run: cp veracode-sarif.json .github/files/
+        run: cp veracode-sarif.json .github/files/       
       - name: show json file
         if: ${{ always() }}
         run: cat .github/files/veracode-sarif.json

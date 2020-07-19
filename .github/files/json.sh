@@ -56,8 +56,8 @@ do
     echo '
                     "region" : {
                             "startLine" : '$line',
-                            "startColumn" : 0,
-                            "endColumn" : 0
+                            "startColumn" : 1,
+                            "endColumn" : 2
                         }
                 }
             }],
@@ -83,7 +83,7 @@ do
     if [ $i != $lines ];
     then
     echo '
-    {' >> veracode-sarif.json;
+    ,{' >> veracode-sarif.json;
     fi
     #ending the results array
 
