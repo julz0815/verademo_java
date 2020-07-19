@@ -27,12 +27,12 @@ do
     # strting the results array
 
     # starting the message tag
-    title=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Title' .github/files/results.json);
-    issuetype=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].IssueType' .github/files/results.json);
+    title=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Title' .github/files/results.json | sed 's/"//g');
+    issuetype=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].IssueType' .github/files/results.json | sed 's/"//g');
     #echo $title;
     echo '
             "message" : {
-                "text" : '$title' - '$issuetype'
+                "text" : "'$title' - '$issuetype'"
             },
         ' >> veracode-sarif.json;
     # ending the message tag
@@ -42,9 +42,9 @@ do
     echo '
          "locations" : [ ' >> veracode-sarif.json;
 
-    file=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Files.SourceFile.File' .github/files/results.json);
-    line=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Files.SourceFile.Line' .github/files/results.json);
-    function=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Files.SourceFile.FunctionName' .github/files/results.json);
+    file=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Files.SourceFile.File' .github/files/results.json | sed 's/"//g');
+    line=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Files.SourceFile.Line' .github/files/results.json | sed 's/"//g');
+    function=$(.github/files/jq-linux64 ' .results.TestResults.Issues.Issue['$i'].Files.SourceFile.FunctionName' .github/files/results.json | sed 's/"//g');
     echo '
             {
                 "physicalLocation" : {
