@@ -76,7 +76,7 @@ do
     #ending the results array
     echo '
         }]
-    }' >> veracode-sarif.json;
+    },' >> veracode-sarif.json;
 
  i=$[$i+1];
 
